@@ -14,8 +14,6 @@ import net.wurstclient.hack.Hack;
 @SearchTags({"ninja", "hud", "hide", "logo"})
 public final class NinjaHack extends Hack
 {
-	private boolean addOptionsButton = true;
-	private boolean removeOptionsButton = false;
 
 	public NinjaHack()
 	{
@@ -23,29 +21,13 @@ public final class NinjaHack extends Hack
 		setCategory(Category.RENDER);
 	}
 
-	public boolean addOptionsButton() {
-		boolean t = addOptionsButton;
-		addOptionsButton = false;
-		return t;
-	}
-
-	public boolean removeOptionsButton() {
-		boolean t = removeOptionsButton;
-		removeOptionsButton = false;
-		return t;
-	}
-
 	@Override
 	protected void onEnable()
 	{
-		addOptionsButton = false;
-		removeOptionsButton = true;
 	}
 	
 	@Override
 	protected void onDisable()
 	{
-		addOptionsButton = true;
-		removeOptionsButton = false;
 	}
 }

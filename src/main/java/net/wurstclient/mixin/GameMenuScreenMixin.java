@@ -92,7 +92,7 @@ public abstract class GameMenuScreenMixin extends Screen
 		List<ClickableWidget> buttons = Screens.getButtons(this);
 
 		for (ClickableWidget button : buttons) {
-			// make feedback/report buttons invisible
+			// make feedback/report buttons visible
 			// (removing them completely would break ModMenu)
 			if (isFeedbackButton(button) || isBugReportButton(button))
 				button.visible = true;
@@ -100,6 +100,34 @@ public abstract class GameMenuScreenMixin extends Screen
 
 		buttons.remove(wurstOptionsButton);
 		wurstOptionsButton = null;
+	}
+
+	private void makeWurstOptionsButtonVisible()
+	{
+		List<ClickableWidget> buttons = Screens.getButtons(this);
+
+		for (ClickableWidget button : buttons) {
+			// make feedback/report buttons visible
+			// (removing them completely would break ModMenu)
+			if (isFeedbackButton(button) || isBugReportButton(button))
+				button.visible = false;
+		}
+
+		wurstOptionsButton.visible = true;
+	}
+
+	private void makeWurstOptionsButtonInvisible()
+	{
+		List<ClickableWidget> buttons = Screens.getButtons(this);
+
+		for (ClickableWidget button : buttons) {
+			// make feedback/report buttons visible
+			// (removing them completely would break ModMenu)
+			if (isFeedbackButton(button) || isBugReportButton(button))
+				button.visible = true;
+		}
+
+		wurstOptionsButton.visible = false;
 	}
 	
 	private boolean isFeedbackButton(ClickableWidget button)
@@ -128,16 +156,16 @@ public abstract class GameMenuScreenMixin extends Screen
 	private void onRender(MatrixStack matrixStack, int mouseX, int mouseY,
 		float partialTicks, CallbackInfo ci)
 	{
-		if (wurstOptionsButton != null && WurstClient.INSTANCE.getHax().ninjaHack.removeOptionsButton()) {
-			removeWurstOptionsButton();
-			return;
-		}
-		if (wurstOptionsButton == null && WurstClient.INSTANCE.getHax().ninjaHack.addOptionsButton()) {
-			addWurstOptionsButton();
-		}
 
 		if(!WurstClient.INSTANCE.isEnabled() || wurstOptionsButton == null)
 			return;
+
+		if (WurstClient.INSTANCE.getHax().ninjaHack.isEnabled()) {
+			makeWurstOptionsButtonInvisible();
+			return;
+		} else {
+			makeWurstOptionsButtonVisible();
+		}
 		
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
