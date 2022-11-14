@@ -129,6 +129,7 @@ public final class KeybindList
 		addKB(set, "right.shift", "navigator");
 		addKB(set, "right.control", "clickgui");
 		addKB(set, "u", "freecam");
+		addKB(set, "i", "ninja");
 		addKB(set, "x", "x-ray");
 		addKB(set, "y", "sneak");
 		return Collections.unmodifiableSet(set);

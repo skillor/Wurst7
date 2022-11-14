@@ -41,6 +41,9 @@ public final class WurstLogoOtf extends OtherFeature
 	
 	public boolean isVisible()
 	{
+		if (WURST.getHax().ninjaHack.isEnabled()) {
+			return false;
+		}
 		return visibility.getSelected().isVisible();
 	}
 	

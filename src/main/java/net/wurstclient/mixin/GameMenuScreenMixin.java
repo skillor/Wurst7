@@ -86,6 +86,49 @@ public abstract class GameMenuScreenMixin extends Screen
 			Text.literal("            Options"), b -> openWurstOptions());
 		buttons.add(buttonI, wurstOptionsButton);
 	}
+
+	private void removeWurstOptionsButton()
+	{
+		List<ClickableWidget> buttons = Screens.getButtons(this);
+
+		for (ClickableWidget button : buttons) {
+			// make feedback/report buttons visible
+			// (removing them completely would break ModMenu)
+			if (isFeedbackButton(button) || isBugReportButton(button))
+				button.visible = true;
+		}
+
+		buttons.remove(wurstOptionsButton);
+		wurstOptionsButton = null;
+	}
+
+	private void makeWurstOptionsButtonVisible()
+	{
+		List<ClickableWidget> buttons = Screens.getButtons(this);
+
+		for (ClickableWidget button : buttons) {
+			// make feedback/report buttons visible
+			// (removing them completely would break ModMenu)
+			if (isFeedbackButton(button) || isBugReportButton(button))
+				button.visible = false;
+		}
+
+		wurstOptionsButton.visible = true;
+	}
+
+	private void makeWurstOptionsButtonInvisible()
+	{
+		List<ClickableWidget> buttons = Screens.getButtons(this);
+
+		for (ClickableWidget button : buttons) {
+			// make feedback/report buttons visible
+			// (removing them completely would break ModMenu)
+			if (isFeedbackButton(button) || isBugReportButton(button))
+				button.visible = true;
+		}
+
+		wurstOptionsButton.visible = false;
+	}
 	
 	private boolean isFeedbackButton(ClickableWidget button)
 	{
@@ -113,8 +156,16 @@ public abstract class GameMenuScreenMixin extends Screen
 	private void onRender(MatrixStack matrixStack, int mouseX, int mouseY,
 		float partialTicks, CallbackInfo ci)
 	{
+
 		if(!WurstClient.INSTANCE.isEnabled() || wurstOptionsButton == null)
 			return;
+
+		if (WurstClient.INSTANCE.getHax().ninjaHack.isEnabled()) {
+			makeWurstOptionsButtonInvisible();
+			return;
+		} else {
+			makeWurstOptionsButtonVisible();
+		}
 		
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);

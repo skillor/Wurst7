@@ -69,6 +69,9 @@ public final class HackListOtf extends OtherFeature
 	
 	public Mode getMode()
 	{
+		if (WURST.getHax().ninjaHack.isEnabled()) {
+			return Mode.HIDDEN;
+		}
 		return mode.getSelected();
 	}
 	
